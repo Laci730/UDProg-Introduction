@@ -12,6 +12,7 @@ constexpr char power = 'p';
 const string declkey = "let";
 const string sqrtkey = "sqrt";
 const string powkey = "pow";
+const string quitkey = "quit";
 
 double expression();
 
@@ -103,7 +104,7 @@ Token Token_stream::get()
 	switch(ch)
 	{	
 
-		case quit:
+		//case quit:
 		case print:
 		case ',':
 		case '(':
@@ -138,6 +139,7 @@ Token Token_stream::get()
 				if(s == declkey) return Token{let};
 				else if (s == sqrtkey) return Token{square_root};
 				else if (s == powkey) return Token{power};
+				else if (s == quitkey) return Token{quit};
 				else if (is_declared(s))
 					return Token(number, get_value(s));
 				return Token{name, s};
@@ -187,7 +189,7 @@ double calc_pow()
    	t = ts.get();
    	if (t.kind != ',')
     	error("pow needs 2 parameters separated with ','");
-   	double i = expression();
+   	int i = narrow_cast<int>(expression());
 
    	t = ts.get();
    	if (t.kind != ')')
